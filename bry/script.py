@@ -13,7 +13,8 @@ class App:
         self.arr = [i + 1 for i in range(self.width)]
         self.prev_arr = []
         
-        self.algorithm = Sidewinder(self)
+        self.algorithms = [AldousBroder(self), Eller(self), BinaryTree(self), Sidewinder(self)]
+        self.algorithm = 0
         self.maze = Maze(self)
 
     def size_init(self, width, height):
@@ -27,6 +28,7 @@ class App:
         self.canvas = document['myCanvas']
         self.width_inp = document['myWidth']
         self.height_inp = document['myHeight']
+        self.algorithm_inp = document['myAlgorithm']
 
         self.ctx = self.canvas.getContext("2d")
 
@@ -35,8 +37,10 @@ class App:
     def generate(self, ev):
         if self.width_inp.value and self.height_inp.value:
             self.size_init(int(self.width_inp.value), int(self.height_inp.value))
+        if self.algorithm_inp.value:
+            self.algorithm = int(self.algorithm_inp.value)
         self.maze.clear()
-        self.algorithm.create_maze()
+        self.algorithms[self.algorithm].create_maze()
         self.draw()
 
     def draw(self):
