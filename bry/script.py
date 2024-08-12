@@ -1,5 +1,4 @@
 from browser import document
-from browser.widgets.dialog import InfoDialog
 from sub_classes import *
 from algorithms import *
 
@@ -13,8 +12,9 @@ class App:
         self.arr = [i + 1 for i in range(self.width)]
         self.prev_arr = []
         
-        self.algorithms = [AldousBroder(self), Eller(self), BinaryTree(self), Sidewinder(self)]
-        self.algorithm = 0
+        self.algorithms = [AldousBroder(self), BinaryTree(self), Sidewinder(self)]
+        self.algorithm_indx = 0
+        self.algorithm = self.algorithms[self.algorithm_indx]
         self.maze = Maze(self)
 
     def size_init(self, width, height):
@@ -37,10 +37,11 @@ class App:
     def generate(self, ev):
         if self.width_inp.value and self.height_inp.value:
             self.size_init(int(self.width_inp.value), int(self.height_inp.value))
-        if self.algorithm_inp.value:
-            self.algorithm = int(self.algorithm_inp.value)
+
+        self.algorithm_indx = int(self.algorithm_inp.value)
+        self.algorithm = self.algorithms[self.algorithm_indx]
         self.maze.clear()
-        self.algorithms[self.algorithm].create_maze()
+        self.algorithm.create_maze()
         self.draw()
 
     def draw(self):
