@@ -46,7 +46,13 @@ class App:
 
     def draw(self):
         ctx = self.ctx
-        ctx.clearRect(0, 0, self.canvas.width, self.canvas.height)
+
+        ctx.beginPath()
+        ctx.rect(0, 0, self.canvas.width, self.canvas.height, 1)
+        ctx.fillStyle = "#0a0a0a"
+        ctx.fill()
+        ctx.closePath()
+
         for i in range(self.height - 1):
             for j in range(self.width):
                 if self.maze.horisontal_walls[i][j]:
